@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASICO Dew Point Sensor | Medical Gas & Critical Infrastructure</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="fonts.css" rel="stylesheet">
+    <link href="aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --med-blue: #0056b3;
+            --med-light: #f0f7ff;
+            --clinical-teal: #00a8a8;
+            --dark-slate: #1a2a3a;
+        }
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            color: #334155;
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            border-bottom: 2px solid var(--med-light);
+            padding: 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--med-blue) !important;
+        }
+
+        /* Hero Banner Styling */
+        .hero-banner-single {
+            position: relative;
+            height: 650px;
+            /* Fixed height for a consistent professional look */
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensures image fills the area without stretching */
+            z-index: -2;
+        }
+
+        .carousel-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Darker on the left to make text pop, lighter on the right to show the image */
+            background: linear-gradient(90deg, rgba(0, 43, 91, 0.9) 0%, rgba(0, 43, 91, 0.3) 100%);
+            z-index: -1;
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive adjustment for mobile */
+        @media (max-width: 768px) {
+            .hero-banner-single {
+                height: auto;
+                padding: 100px 0;
+                text-align: center;
+            }
+
+            .carousel-image-overlay {
+                background: rgba(0, 43, 91, 0.8);
+                /* Solid overlay for mobile readability */
+            }
+        }
+
+
+        /* Section Titles */
+        .section-title {
+            color: var(--med-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            margin-top: 1.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--clinical-teal);
+            margin-top: 10px;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            border: none;
+            border-radius: 12px;
+            background: var(--med-light);
+            transition: all 0.3s ease;
+            padding: 2rem;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Application Gallery */
+        .app-img-box {
+            height: 220px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.2rem;
+            border: 1px solid #eee;
+        }
+
+        .app-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Tech Spec Table */
+        .spec-sidebar {
+            background: var(--dark-slate);
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .spec-table thead {
+            background-color: var(--med-blue);
+            color: white;
+        }
+
+        .spec-table tr td:first-child {
+            background-color: #fcfcfc;
+            font-weight: 600;
+            color: var(--med-blue);
+        }
+
+        /* Wiring Instruction Block */
+        .wiring-box {
+            background: #2c3e50;
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        /* How it Works Section */
+        .how-works-img {
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Problem/Risk Section */
+        .risk-box {
+            background: var(--danger-soft);
+            border-left: 5px solid #dc3545;
+            padding: 20px;
+            border-radius: 8px;
+            height: 100%;
+        }
+
+
+        .badge-wiring {
+            display: inline-block;
+            width: 80px;
+            text-align: center;
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            color: var(--med-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Application Cards */
+        .app-card {
+            background: #fff;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            overflow: hidden;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 86, 179, 0.1);
+            border-color: var(--med-blue);
+        }
+
+        .app-img-container {
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+            background-color: #eee;
+        }
+
+        .app-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .app-card:hover .app-img-container img {
+            transform: scale(1.05);
+        }
+
+        .app-content {
+            padding: 25px;
+        }
+
+        .app-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .app-title span {
+            margin-right: 10px;
+            font-size: 1.25rem;
+        }
+
+        .app-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #64748b;
+        }
+
+        .compliance-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--med-blue);
+            background: var(--med-bg);
+            padding: 4px 12px;
+            border-radius: 50px;
+            margin-top: 15px;
+            border: 1px solid #d0e3ff;
+        }
+
+        .footer {
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            padding: 10px 0;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="logo.png" alt="ASICO SYSTEMS" style="height: 50px; width: auto;"
+                    class="d-inline-block align-top"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link px-3" href="#science">The Science</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#applications">Applications</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#specs">Specifications</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-banner-single">
+        <div class="carousel-image-overlay"></div>
+        <img src="banner.jpg" alt="Medical Gas Monitoring" class="hero-bg-img">
+
+        <div class="container hero-container">
+            <div class="row">
+                <div class="col-lg-8 text-white" data-aos="fade-up" data-aos-duration="1000">
+                    <h1 class="display-3 fw-bold mb-3">Precision Moisture Monitoring</h1>
+                    <p class="lead mb-4 fs-3">Critical Gas Systems Demand Absolute Dryness.</p>
+                    <p class="mb-5 opacity-90" style="max-width: 700px;">
+                        The ASICO Systems Dew Point Sensor delivers accurate, real-time measurement
+                        for reliability in demanding environments. Protect equipment, ensure
+                        compliance, and maintain performance where dryness is mission-critical.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#specs" class="btn btn-primary btn-lg px-5 fw-bold">View Specs Sheet</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="science" class="py-5 overflow-hidden">
+        <div class="container">
+            <div class="row mb-5" data-aos="fade-up">
+                <div class="col-12">
+                    <h2 class="section-title d-inline-block">The Science of Dryness</h2>
+                    <p class="lead mt-3">Protecting Patient Safety and System Integrity through Precision Monitoring</p>
+                </div>
+            </div>
+
+            <div class="row g-5">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+                    <h4 class="fw-bold mb-4 text-dark">Why Dew Point Monitoring Matters</h4>
+                    <p>Moisture isn't just water—it's a threat to your entire infrastructure. Left unmonitored, moisture
+                        in gas systems leads to critical risks:</p>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="risk-box p-3 border-start border-danger border-4 bg-light rounded shadow-sm">
+                                <h6 class="fw-bold mb-1">Pipeline Corrosion</h6>
+                                <p class="small text-muted mb-0">Internal oxidation and structural decay.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="risk-box p-3 border-start border-danger border-4 bg-light rounded shadow-sm">
+                                <h6 class="fw-bold mb-1">Equipment Damage</h6>
+                                <p class="small text-muted mb-0">Failure of sensitive medical valves.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="risk-box p-3 border-start border-danger border-4 bg-light rounded shadow-sm">
+                                <h6 class="fw-bold mb-1">System Downtime</h6>
+                                <p class="small text-muted mb-0">Costly repair and cleaning cycles.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="risk-box p-3 border-start border-danger border-4 bg-light rounded shadow-sm">
+                                <h6 class="fw-bold text-danger mb-1">Patient Risk</h6>
+                                <p class="small text-muted mb-0">Safety hazards in clinical environments.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-5 opacity-25">
+
+                    <h4 class="fw-bold mb-3 text-primary" data-aos="fade-right" data-aos-delay="200">Advanced Sensing
+                        Technology</h4>
+                    <p data-aos="fade-right" data-aos-delay="200">
+                        The ASICO-DPS sensor utilizes advanced <strong>Capacitive Polymer Technology</strong> to provide
+                        real-time sensing of moisture levels. It calculates the exact temperature at which condensation
+                        will form, allowing you to:</p>
+
+                    <div class="d-flex mb-2" data-aos="fade-up" data-aos-delay="100">
+                        <div class="text-success me-2 fw-bold">✔</div>
+                        <p class="mb-0"><strong>Prevent Bacterial Growth:</strong> Stay ahead of pathogen-thriving
+                            environments.</p>
+                    </div>
+                    <div class="d-flex" data-aos="fade-up" data-aos-delay="100">
+                        <div class="text-success me-2 fw-bold">✔</div>
+                        <p class="mb-0"><strong>Ensure Compliance:</strong> Meet NFPA 99 and CSA dryness standards
+                            effortlessly.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="400">
+                    <div class="position-relative">
+                        <img src="science.avif" class="img-fluid rounded-4 shadow-lg mb-4" alt="Sensor Technology">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="applications" class="py-5 bg-light">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up" data-aos-delay="200">
+                <h2 class="section-title d-inline-block">Critical Applications</h2>
+                <p class="lead text-muted mx-auto" style="max-width: 750px;">Where accuracy is non-negotiable.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-right" data-aos-delay="300">
+                    <div class="app-card">
+                        <div class="app-img-container">
+                            <img src="medical-gas-systems.png"
+                                alt="Hospital Medical Gas Pipeline">
+                        </div>
+                        <div class="app-content">
+                            <h5 class="app-title"><span>🏭</span> Medical Gas Systems</h5>
+                            <p class="app-text">Ensure safe and dry medical air supply by continuously monitoring
+                                moisture levels. Proper dew point control helps prevent condensation, protects
+                                equipment, and supports compliance with NFPA 99 and CSA standards.</p>
+                            <span class="compliance-badge">NFPA 99 / CSA STANDARDS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-right" data-aos-delay="400">
+                    <div class="app-card">
+                        <div class="app-img-container">
+                            <img src="industrial-compressed-air.jpg"
+                                alt="Industrial Air Compressor System">
+                        </div>
+                        <div class="app-content">
+                            <h5 class="app-title"><span>⚙️</span> Industrial Compressed Air</h5>
+                            <p class="app-text">Maintain system efficiency and prevent corrosion by detecting
+                                moisture before it causes damage. Even small changes in dew point can significantly
+                                impact compressed air quality and equipment lifespan.</p>
+                            <span class="compliance-badge">ISO 8573-1 COMPLIANCE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-right" data-aos-delay="500">
+                    <div class="app-card">
+                        <div class="app-img-container">
+                            <img src="pharmaceutical.jpeg"
+                                alt="Pharmaceutical Cleanroom Production">
+                        </div>
+                        <div class="app-content">
+                            <h5 class="app-title"><span>💊</span> Pharma & Biotech</h5>
+                            <p class="app-text">Support high-purity environments by controlling moisture in gas
+                                systems used in production and processing. Accurate dew point monitoring ensures
+                                product integrity and regulatory compliance.</p>
+                            <span class="compliance-badge">GxP REGULATED</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-right" data-aos-delay="300">
+                    <div class="app-card">
+                        <div class="app-img-container">
+                            <img src="lab.png"
+                                alt="Laboratory Research Cleanroom">
+                        </div>
+                        <div class="app-content">
+                            <h5 class="app-title"><span>🧪</span> Labs & Cleanrooms</h5>
+                            <p class="app-text">Maintain precise environmental conditions where even minimal
+                                moisture variations can affect results. Ideal for applications requiring high
+                                accuracy and stability in research environments.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-right" data-aos-delay="400">
+                    <div class="app-card">
+                        <div class="app-img-container">
+                            <img src="beverage.avif"
+                                alt="Food Processing Facility">
+                        </div>
+                        <div class="app-content">
+                            <h5 class="app-title"><span>🍽</span> Food & Beverage</h5>
+                            <p class="app-text">Prevent contamination and ensure consistent product quality by
+                                monitoring moisture levels in compressed air used during production and packaging
+                                processes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row flex-lg-row-reverse align-items-center g-5" data-aos="flip-left" data-aos-delay="200">
+                <div class="col-lg-6">
+                    <h2 class="fw-bold text-primary mb-4">How It Works</h2>
+                    <p class="fs-5">The sensor continuously monitors moisture levels in gas streams and calculates
+                        the <strong>dew point temperature</strong>—the exact moment condensation occurs.</p>
+                    <div class="card border-0 shadow-lg p-4 bg-white">
+                        <p class="mb-0">By maintaining proper dew point levels, systems can operate efficiently
+                            without the risk of moisture damage. Our sensor provides the real-time data needed to
+                            trigger alarms before a single drop of water forms.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="how-it-works.jpeg"
+                        class="how-works-img img-fluid" alt="Precision Sensor visualization">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-down" data-aos-delay="200">Key Features & Benefits</h2>
+            <div class="row g-4 mt-2" data-aos="flip-up" data-aos-delay="300">
+                <div class="col-md-4">
+                    <div class="card feature-card shadow-sm p-4">
+                        <h5 class="fw-bold">✔ High Accuracy</h5>
+                        <p class="small text-muted">Measures −50°C to +50°C with ±2°C accuracy for reliable moisture
+                            control.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card shadow-sm p-4">
+                        <h5 class="fw-bold">✔ Fast Response</h5>
+                        <p class="small text-muted">Response time of < 4 seconds (t90) allows for immediate corrective
+                                action.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card shadow-sm p-4">
+                        <h5 class="fw-bold">✔ Easy Integration</h5>
+                        <p class="small text-muted">4–20 mA linear output connects easily to Alarms, BMS, and PLC
+                            systems.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card feature-card shadow-sm p-4">
+                        <h5 class="fw-bold">✔ Rugged Design</h5>
+                        <p class="small text-muted">Operates in ambient temperatures from −40°C to +60°C for
+                            long-term durability.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card feature-card shadow-sm p-4">
+                        <h5 class="fw-bold">✔ Simple Installation</h5>
+                        <p class="small text-muted">Designed with a 3-wire configuration for quick and
+                            straightforward setup.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="specs" class="py-5">
+        <div class="container">
+            <div class="row mb-4" data-aos="fade-right" data-aos-delay="200">
+                <div class="col-12">
+                    <h2 class="section-title">Technical Specifications</h2>
+                </div>
+            </div>
+
+            <div class="row g-5 align-items-stretch">
+                <div class="col-lg-7">
+                    <div class="table-responsive h-100" data-aos="fade-right" data-aos-delay="200">
+                        <table class="table table-bordered spec-table mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Parameter</th>
+                                    <th scope="col">Data</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold text-primary">Dew Point Range</td>
+                                    <td>−50°C to +50°C</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold text-primary">Accuracy</td>
+                                    <td>±2°C</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold text-primary">Output Signal</td>
+                                    <td>4–20 mA (Linear)</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold text-primary">Supply Voltage</td>
+                                    <td>10–30 VDC</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold text-primary">Wiring Configuration</td>
+                                    <td>3-wire system</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold text-primary">Operating Temperature</td>
+                                    <td>−40°C to +60°C</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-5" data-aos="fade-left" data-aos-delay="200">
+                    <div class="wiring-box shadow-lg h-100 d-flex flex-column justify-content-center">
+                        <h4 class="mb-4 text-info fw-bold">Field Installation Guide</h4>
+
+                        <div class="wiring-items">
+                            <div class="mb-3 d-flex align-items-center">
+                                <span class="badge-wiring" style="background-color: #8B4513; color: white;">BROWN</span>
+                                <span class="fw-600">Ground (GND)</span>
+                            </div>
+                            <div class="mb-3 d-flex align-items-center">
+                                <span class="badge-wiring" style="background-color: #000000; color: white;">BLACK</span>
+                                <span class="fw-600">Signal (4–20 mA)</span>
+                            </div>
+                            <div class="mb-3 d-flex align-items-center">
+                                <span class="badge-wiring" style="background-color: #0000FF; color: white;">BLUE</span>
+                                <span class="fw-600">Power (10–30 VDC)</span>
+                            </div>
+                        </div>
+
+                        <hr class="opacity-20 my-4">
+                        <p class="small text-light mb-0 fst-italic">
+                            Designed for rapid retrofit or new facility construction.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 text-white" style="background: var(--med-blue);">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-4">Ready for Integration?</h2>
+            <button class="btn btn-warning btn-lg px-5 fw-bold">Request a Quote</button>
+        </div>
+    </section>
+
+    <footer class="footer text-center">
+        <div class="container">
+            <p class="fw-bold text-dark mb-1">ASICO SYSTEMS | Engineering Excellence</p>
+            <div class="small opacity-50">© 2026 ASICO Systems. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800, // Animation speed in ms
+            once: true,    // Whether animation should happen only once - while scrolling down
+            offset: 100    // Offset from original trigger point
+        });
+    </script>
+</body>
+
+</html>
